@@ -30,40 +30,41 @@ The programs were written in Python and I converted the script into an executabl
 
 Aggregator v1.0.0 Linux Distribution 
 --------------------
-Instructions:
+
+#####Instructions:
 Run the following commands once you have the compressed file on your computer.
 
-tar -zxvf <file name>
-cd dist
-make
-./aggregator
-
+	tar -zxvf <file name>
+	cd dist
+	make
+	./aggregator
+  
 Control + c to exit. It will run forever...
 
-If you want to run it in the background:
+######If you want to run it in the background:
 
-./aggregator &
+	./aggregator &
 
-If you want it to run at startup of your computer, then add the following line to your user's crontab file:
+######If you want it to run at startup of your computer, then add the following line to your user's crontab file:
 
-@reboot /path/to/aggregator &
+	@reboot /path/to/aggregator &
 
 To access your crontab file run the following command:
 
-crontab -e
+	crontab -e
 
 
 
 Aggregator v1.0.0 Windows Distribution 
 --------------------
 
-Instructions:
+#####Instructions:
 Running the application can be done through Windows Explorer once you have the file downloaded to your computer.
 
-1. Extract the zip file to another folder
-2. Double click on the aggregator application to run the program
+	1. Extract the zip file to another folder
+	2. Double click on the aggregator application to run the program
 
-To run the program automatically whenever you log in, follow the instructions at this site:
+######To run the program automatically whenever you log in, follow the instructions at this site:
 
 http://windows.microsoft.com/en-us/windows-vista/run-a-program-automatically-when-windows-starts
 
@@ -78,43 +79,48 @@ I have identified a possible tool to turn my Python code into an Android App usi
 
 
 
-Open a Port on Your Router:
+How to use the program:
 --------------------
+
+####Open Port on your Router/Firewall
 
 In order for your aggregator client to be able to forward data for other aggregators, it will need to behave like a server. If you run this application at home or work or in most public settings, then you will likely not by default be able to be reachable from Internet. If you run it at home, you can change the settings on your home router to open up the port necessary to enable this functionality.
 
 You will need to forward UDP port 9999 to your computer's address.
 
 Inbound:
-UDP/9999 - Receive to Forward
-Outbound:
-UDP/9999 - Send
-UDP/14001 - Get public IP
+	UDP/9999 - Receive to Forward
+	Outbound:
+	UDP/9999 - Send
+	UDP/14001 - Get public IP
 
 
-Example outputs when port is not open:
+#####Example outputs when port is not open:
 
-admin@box$ ./aggregator
-socket timeout: 5.0
-My Public IP: 54.215.246.142
-sent join
-received: getl
-sent setl
-list: ['23.23.205.15']
-got open msg from collector, should be an aggregator
+	dmin@box$ ./aggregator
+	socket timeout: 5.0
+	My Public IP: 54.215.246.142
+	sent join
+	received: getl
+	sent setl
+	list: ['23.23.205.15']
+	got open msg from collector, should be an aggregator
 
 
-Example outputs when port is open:
+#####Example outputs when port is open:
 
-admin@box$ ./aggregator
-socket timeout: 5.0
-My Public IP: 54.215.246.142
-sent join
-received: getl
-sent setl
-list: ['23.23.205.15']
-no response from collector, my port may not be open
+	admin@box$ ./aggregator
+	socket timeout: 5.0
+	My Public IP: 54.215.246.142
+	sent join
+	received: getl
+	sent setl
+	list: ['23.23.205.15']
+	no response from collector, my port may not be open
 
+####Program Outputs
+
+At this time the program run on a Command Line Interface and just outputs initial setup messages and occassional other control messages.
 
 Right now, the outputs from the program on the command line are not that interesting. You may see:
 
@@ -125,6 +131,3 @@ Right now, the outputs from the program on the command line are not that interes
 If the collector is not available, which would likely be my fault, then you will see the program keep trying while adding one second to the back-off period each time.
 
 
-
-
---------------------
