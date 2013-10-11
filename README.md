@@ -24,11 +24,15 @@ https://mapsengine.google.com/map/edit?mid=zRpKPAmWKca8.k1Tk1jn81byA
 
 
 
-The programs were written in Python and I converted the script into an executable file for Windows and C code for Linux so that the executable could be built on your Linux system. See the latest posts for instructions for accessing the aggregator program. If you are interested in seeing the Python "source code", please message me.
+The program was written in Python and I converted the script into an executable file for Windows and C code for Linux so that the executable could be built on your Linux system. See the latest posts for instructions for accessing the aggregator program. 
 
 
+Python
+--------------------
 
-Aggregator v1.0.0 Linux Distribution 
+As of version 1.0.1, I have also released the Python source script.  If you have Python installed on your system you can run the script instead of building the source code or using the executable in Windows. 
+
+Linux
 --------------------
 
 #####Instructions:
@@ -55,7 +59,7 @@ To access your crontab file run the following command:
 
 
 
-Aggregator v1.0.0 Windows Distribution 
+Windows
 --------------------
 
 #####Instructions:
@@ -82,7 +86,7 @@ I have identified a possible tool to turn my Python code into an Android App usi
 How to use the program:
 --------------------
 
-####Open Port on your Router/Firewall
+####Open port on your router/firewall
 
 In order for your aggregator client to be able to forward data for other aggregators, it will need to behave like a server. If you run this application at home or work or in most public settings, then you will likely not by default be able to be reachable from Internet. If you run it at home, you can change the settings on your home router to open up the port necessary to enable this functionality.
 
@@ -94,43 +98,13 @@ Inbound:
 	UDP/9999 - Send
 	UDP/14001 - Get public IP
 
+####Program Behavior
 
-#####Example outputs when port is not open:
+At this time the program just outputs initial setup messages and occassional other control messages.
 
-	dmin@box$ ./aggregator
-	socket timeout: 5.0
-	My Public IP: 54.215.246.142
-	sent join
-	received: getl
-	sent setl
-	list: ['23.23.205.15']
-	got open msg from collector, should be an aggregator
+If there is an error in the system or the collector is not available, which would likely be my fault, then you will see the program keep trying while adding one second to the back-off period each time.  Just wait a while or contact me to let me know you are having a problem.
 
-
-#####Example outputs when port is open:
-
-	admin@box$ ./aggregator
-	socket timeout: 5.0
-	My Public IP: 54.215.246.142
-	sent join
-	received: getl
-	sent setl
-	list: ['23.23.205.15']
-	no response from collector, my port may not be open
-
-####Program Outputs
-
-At this time the program run on a Command Line Interface and just outputs initial setup messages and occassional other control messages.
-
-Right now, the outputs from the program on the command line are not that interesting. You may see:
-
-"somebody is checking latency with us" - this means another node is checking how much latency is between it and you to see if you are a good candidate for being the next-hop aggregator for that node.
-
-"add child due to msg xxxx ('54.229.219.118', 9999)" - this means the node started sending data to you, so you added it to your aggregator list
-
-If the collector is not available, which would likely be my fault, then you will see the program keep trying while adding one second to the back-off period each time.
-
-####Privacy and Protection
+#####Privacy and Protection
 
 The only data sent out by this application is your IP address which you learn through talking with my collector anyway.
 
