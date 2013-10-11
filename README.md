@@ -22,7 +22,9 @@ See my current data aggregation maps at:
 
 https://mapsengine.google.com/map/edit?mid=zRpKPAmWKca8.k1Tk1jn81byA
 
+See the LinkedIn Group page setup to communicate about updates:
 
+http://www.linkedin.com/groups/Andrew-Stantons-WSU-Masters-Thesis-6518497?home=&gid=6518497&trk=groups_guest_most_popular-h-logo
 
 The program was written in Python and I converted the script into an executable file for Windows and C code for Linux so that the executable could be built on your Linux system. See the latest posts for instructions for accessing the aggregator program. 
 
