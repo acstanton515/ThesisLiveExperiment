@@ -93,8 +93,11 @@ In order for your aggregator client to be able to forward data for other aggrega
 You will need to forward UDP port 9999 to your computer's address.
 
 Inbound:
+	
 	UDP/9999 - Receive to Forward
-	Outbound:
+
+Outbound:
+
 	UDP/9999 - Send
 	UDP/14001 - Get public IP
 
