@@ -114,3 +114,5 @@ If there is an error in the system or the collector is not available, which woul
 The only data sent out by this application is your IP address which you learn through talking with my collector anyway.
 
 There won't be any association between your IP address and any other information about you.
+
+The Python source code is also available, so you can see for yourself what the application sends.
