@@ -28,6 +28,14 @@ http://www.linkedin.com/groups/Andrew-Stantons-WSU-Masters-Thesis-6518497?home=&
 
 The program was written in Python and I converted the script into an executable file for Windows and C code for Linux so that the executable could be built on your Linux system. See the latest posts for instructions for accessing the aggregator program. 
 
+#####Privacy and Protection
+
+The only data sent out by this application is your IP address which you learn through talking with my collector anyway.
+
+There won't be any association between your IP address and any other information about you.
+
+The Python source code is also available, so you can see for yourself what the application sends.
+
 
 Python
 --------------------
@@ -108,11 +116,3 @@ Outbound:
 At this time the program just outputs initial setup messages and occassional other control messages.
 
 If there is an error in the system or the collector is not available, which would likely be my fault, then you will see the program keep trying while adding one second to the back-off period each time.  Just wait a while or contact me to let me know you are having a problem.
-
-#####Privacy and Protection
-
-The only data sent out by this application is your IP address which you learn through talking with my collector anyway.
-
-There won't be any association between your IP address and any other information about you.
-
-The Python source code is also available, so you can see for yourself what the application sends.
