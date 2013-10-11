@@ -130,4 +130,8 @@ Right now, the outputs from the program on the command line are not that interes
 
 If the collector is not available, which would likely be my fault, then you will see the program keep trying while adding one second to the back-off period each time.
 
+####Privacy and Protection
 
+The only data sent out by this application is your IP address which you learn through talking with my collector anyway.
+
+There won't be any association between your IP address and any other information about you.
