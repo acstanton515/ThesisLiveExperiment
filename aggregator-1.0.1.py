@@ -69,7 +69,6 @@ def setup ():
 	#join to the collector
 	sck2.sendto('join',collector)
 	print "Next we will join the system and get a list of possible aggregators."
-	sleep(5)
 	try:
 		rem_msg, rem_addr = sck2.recvfrom(4096)
 	except socket.error:
