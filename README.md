@@ -55,7 +55,7 @@ Run the following commands once you have the compressed file on your computer.
   
 Control + c to exit. It will run forever...
 
-######If you want to run it in the background:
+######If you want to run it in the background on the terminal (need to leave the terminal live, or use nohup for permanent background):
 
 	./aggregator &
 
