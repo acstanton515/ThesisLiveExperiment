@@ -29,28 +29,37 @@ child_aggs = []
 print "Welcome to the Data Aggregation System!\nI will handle everything for you.\nJust sit and watch or go get a drink of water.\n\n"
 sleep(5)
 
+def inform_lost ():
+	global child_aggs
+	print "Informing children aggregators that we lost connectivity with the system."
+	for i in range(len(child_aggs)):
+		print child_aggs[i]
+		sck.sendto('nope',child_aggs[i])
+	if should_be_aggregator:
+		sck.sendto('aggt',collector) # should de-register
+		print "Informing collector to remove us from the aggregator list as well."
+	child_aggs = []
+
+register(inform_lost) #best effort attempt to inform children if we exit program
+
 #setup / join
 
 def setup ():
 	global aggs, public_address, next_aggregator, sck2, sck, should_be_aggregator
 	aggs.clear()
-		
+	should_be_aggregator = False
 	sck2 = socket.socket (socket.AF_INET, socket.SOCK_DGRAM) #used for setup mostly, to hide source port
 	#change to 5 second time out
 	sck2.settimeout(5)
 	
-	while 1:
-		try:
-			sck.recvfrom(4096)
-			continue
-		except socket.timeout:
-			break
-		except socket.error:
-			break
-	
-	#change to non-blocking
-	sck.settimeout(5.0) # 40 ms wait, check 25 times per second 
-	#print "socket timeout: ", sck2.gettimeout()
+	# while 1:
+		# try:
+			# sck.recvfrom(4096)
+			# continue
+		# except socket.timeout:
+			# break
+		# except socket.error:
+			# break
 	
 	print "Connecting to the collector's echo IP service to learn our public address."
 	sleep(5)
@@ -152,27 +161,36 @@ def setup ():
 	print "\nSending aggregation request to collector to see if we can aggregate for others."
 	sleep(5)
 	sck2.sendto('aggt', collector)
-	try:
-		rem_msg, rem_addr = sck.recvfrom(4096)
-	except socket.timeout:
-		print "No response from collector.  UDP port 9999 may not be open.\n" \
-				" - You might look into this if you want this to work.  Did you configure your router and computer's firewall settings to allow this?\n" \
-				" - This is not a critical error.  We can forward our data to the next-hop aggregator, but we can't forward data for others."
-	except socket.error:
-		#print "Unexpected response from collector (not listening)"
-		#return False
-		pass
-	else:
-		if rem_msg == 'open':
-			if rem_addr[0] == collector[0]:
-				print "Got open message from collector. we should be able to aggregate data for others!" \
-						"The collector may send them our way when they join the aggregation system."
-				should_be_aggregator = True
-				sck.sendto('aggt', rem_addr)	#won't guarantee we join, but hopefully
+	sleep(1)
+	sck.settimeout(0.0)
+	while 1:
+		try:
+			rem_msg, rem_addr = sck.recvfrom(4096)
+		except (socket.timeout, socket.error):
+			print "No response from collector.  UDP port 9999 may not be open.\n" \
+					" - You might look into this if you want this to work.  Did you configure your router and computer's firewall settings to allow this?\n" \
+					" - This is not a critical error.  We can forward our data to the next-hop aggregator, but we can't forward data for others."
+			break
+		else:
+			if rem_msg == 'open':
+				if rem_addr[0] == collector[0]:
+					print "Got open message from collector. we should be able to aggregate data for others!" \
+							"The collector may send them our way when they join the aggregation system."
+					should_be_aggregator = True
+					sck.sendto('aggt', rem_addr)	#won't guarantee we join, but hopefully
+					break
 		
 	#change to non-blocking
-	sck.settimeout(0.04) # 40 ms wait, check 25 times per second 	
-	sleep(5)
+	sck.settimeout(0.04) # 40 ms wait, check 25 times per second 
+	
+	if child_aggs:
+		if not should_be_aggregator:
+			inform_lost ()
+		else:
+			for i in child_aggs:
+				sck.sendto('chld' + socket.inet_aton(i), collector)
+			
+	sleep(1) #removed to speed up start time
 	print "\nSetup complete!  Let's start sending data."
 	return True
 
@@ -185,19 +203,8 @@ def do_setup ():
 
 do_setup ()
 print "\nThere may not be much output from here, but leave the program running.\nIf you want to close the program, press Control+c.\n"	
-
-def inform_lost ():
-	global child_aggs
-	print "Informing children aggregators that we lost connectivity with the system."
-	for i in range(len(child_aggs)):
-		print child_aggs[i]
-		sck.sendto('nope',child_aggs[i])
-	if should_be_aggregator:
-		sck.sendto('aggt',collector) # should de-register
-		print "Informing collector to remove us from the aggregator list as well."
-	child_aggs = []
 		
-register(inform_lost) #best effort attempt to inform children if we exit program
+
 
 #vars for while loop
 
@@ -257,7 +264,7 @@ while 1:
 					t3 = t2 = t1 = time()
 					current_msg = '' #reset message
 				elif rem_addr[0] == next_aggregator[0]:
-					print "Received message from the next hop aggregator indicating the it may have gone down.\nRestarting setup."
+					print "Received message from the next hop aggregator indicating it may have gone down.\nRestarting setup."
 					if not setup():
 						#inform child aggs that you are not able to send
 						inform_lost ()
