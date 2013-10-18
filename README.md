@@ -1,5 +1,16 @@
-ThesisLiveExperiment - Run My App Tonight (Thursday October 17th)
+ThesisLiveExperiment
 ====================
+
+Experiment Over, but the code lives on.  
+--------------------
+
+On October 17th, 2013 I tried getting as many people to run the code as possible and got around 30+ nodes to join.  It didn't go viral or anything, but I appreciate all the support from friends.  Sorry if I bothered you too much!
+
+If I keep the collector running, you should still be able to join the DA system.
+
+
+Description
+--------------------
 
 I am working on a live experiment for my thesis research that will demonstrate my data aggregation framework working over the Internet.  Looking for anyone to run these programs.
 
