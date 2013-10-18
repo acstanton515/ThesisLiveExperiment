@@ -188,7 +188,7 @@ def setup ():
 			inform_lost ()
 		else:
 			for i in child_aggs:
-				sck.sendto('chld' + socket.inet_aton(i), collector)
+				sck.sendto('chld' + socket.inet_aton(i[0]), collector)
 			
 	sleep(1) #removed to speed up start time
 	print "\nSetup complete!  Let's start sending data."
